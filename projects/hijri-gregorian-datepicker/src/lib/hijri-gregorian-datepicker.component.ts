@@ -94,7 +94,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   constructor(
     public formBuilder: UntypedFormBuilder,
     private _dateUtilsService: HijriGregorianDatepickerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fontFamilyStyle = this.styles.fontFamily;
@@ -126,7 +126,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
         this.futureYearsLimit == 0
           ? Number(this.todaysDate.gregorian?.split('/')[2])
           : Number(this.todaysDate.gregorian?.split('/')[2]) +
-            this.futureYearsLimit;
+          this.futureYearsLimit;
       for (let i = 0; i < this.gregYear; i++) {
         if (i < this.pastYearsLimit) {
           let val = this.gregYear--;
@@ -141,7 +141,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
         this.futureYearsLimit == 0
           ? Number(this.todaysDate.ummAlQura?.split('/')[2])
           : Number(this.todaysDate.ummAlQura?.split('/')[2]) +
-            this.futureYearsLimit;
+          this.futureYearsLimit;
       for (let i = 0; i < this.ummAlQuraYear; i++) {
         if (i < this.pastYearsLimit) {
           let val = this.ummAlQuraYear--;
@@ -183,9 +183,9 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     }
     const days = this._dateUtilsService.getMonthData(
       '01/' +
-        this.periodForm.controls['month'].value +
-        '/' +
-        this.periodForm.controls['year'].value,
+      this.periodForm.controls['month'].value +
+      '/' +
+      this.periodForm.controls['year'].value,
       this.mode
     );
     this.weeks = this.generateWeeksArray(days);
@@ -246,15 +246,15 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     this.initializeYearsAndMonths();
     this.generatetMonthData(
       '01/' +
-        this.periodForm.controls['month'].value +
-        '/' +
-        this.periodForm.controls['year'].value
+      this.periodForm.controls['month'].value +
+      '/' +
+      this.periodForm.controls['year'].value
     );
   }
 
   /// On day clicked handler
   onDayClicked(day: DayInfo) {
-    if (day.gD) {
+    if (day?.gD) {
       if (this.futureValidation) {
         if (this.checkFutureValidation(day)) {
           this.futureValidationMessage = true;
