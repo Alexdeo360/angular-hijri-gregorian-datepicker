@@ -254,7 +254,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
 
   /// On day clicked handler
   onDayClicked(day: DayInfo) {
-    if (day?.gD) {
+    if (day && day?.gD) {
       if (this.futureValidation) {
         if (this.checkFutureValidation(day)) {
           this.futureValidationMessage = true;
