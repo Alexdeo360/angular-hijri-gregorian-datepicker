@@ -44,7 +44,18 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @Input() futureYearsLimit: number = 0;
   @Input() futureValidationMessageEn: string;
   @Input() futureValidationMessageAr: string;
-  @Input() styles: stylesConfig;
+  @Input() styles?: stylesConfig = {
+    backgroundColor: '#E3F6F5',
+    primaryColor: '#272343',
+    secondaryColor: '#272343',
+    todaysDateBgColor: '#272343',
+    todaysDateTextColor: '#fff',
+    confirmBtnTextColor: '#fff',
+    disabledDayColor: '#C0C0C0',
+    dayColor: '#000',
+    dayNameColor: '#0d7f91',
+    fontFamily: 'Default-Regular',
+  };
   /// Outputs
   @Output() onSubmit = new EventEmitter<object>();
   @Output() onDaySelect = new EventEmitter<object>();
