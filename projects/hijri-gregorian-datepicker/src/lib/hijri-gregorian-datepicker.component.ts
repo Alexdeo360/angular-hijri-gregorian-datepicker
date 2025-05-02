@@ -9,9 +9,9 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { stylesConfig } from '../interfaces/styles-config-model';
-import { HijriGregorianDatepickerService } from '../_services/hijri-gregorian-datepicker.service';
-import { TodayDate, DayInfo } from '../interfaces/calendar-model';
+import { stylesConfig } from '../_interfaces/styles-config.model';
+import { DateUtilitiesService } from '../_services/date-utilities.service';
+import { TodayDate, DayInfo } from '../_interfaces/calendar-model';
 
 @Component({
   selector: 'hijri-gregorian-datepicker',
@@ -44,6 +44,10 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @Input() futureYearsLimit: number = 0;
   @Input() futureValidationMessageEn: string;
   @Input() futureValidationMessageAr: string;
+  @Input() gregStartDate: string;
+  @Input() gregEndDate: string;
+  @Input() ummAlQuraStartDate: string;
+  @Input() ummAlQuraEndDate: string;
   @Input() styles?: stylesConfig = {
     backgroundColor: '#E3F6F5',
     primaryColor: '#272343',
@@ -92,11 +96,12 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   ];
   ummAlQuraYear: number;
   gregYear: number;
-  years = [];
-  weeks = [];
-  months = [];
+  years: any[];
+  weeks: any[];
+  months: any[];
   weekdaysEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  weekdaysAr = ['س', 'ج', 'خ', 'أر', 'ث', 'إث', 'أح'];
+  weekdaysAr = ['سبت', 'جمعة', 'خميس', 'أربعاء', 'ثلاثاء', 'اثنين', 'أحد'];
+  // weekdaysAr = ['س', 'ج', 'خ', 'أر', 'ث', 'إث', 'أح'];
   todaysDate: TodayDate = {};
   selectedDay: DayInfo;
   periodForm: UntypedFormGroup;
@@ -104,8 +109,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @HostBinding('style.font-family') fontFamilyStyle: string;
   constructor(
     public formBuilder: UntypedFormBuilder,
-    private _dateUtilsService: HijriGregorianDatepickerService
-  ) { }
+    public _dateUtilsService: DateUtilitiesService
+  ) {}
 
   ngOnInit(): void {
     this.fontFamilyStyle = this.styles.fontFamily;
@@ -128,16 +133,35 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     });
   }
 
-  /// Initialize years and months for calendar
+  // Initialize years and months for calendar
   initializeYearsAndMonths() {
     this.years = [];
     this.months = [];
     if (this.mode == 'greg') {
+      if (this.gregStartDate && this.gregEndDate) {
+        // ✅ Use start/end range
+        const startYear = Number(this.gregStartDate.split('/')[2]);
+        const endYear = Number(this.gregEndDate.split('/')[2]);
+
+        for (let y = startYear; y <= endYear; y++) {
+          this.years.push(y);
+        }
+      } else {
+        // 🔁 Use past/future years logic
+        const currentYear = Number(this.todaysDate.gregorian?.split('/')[2]);
+        const startYear = currentYear - this.pastYearsLimit;
+        const endYear = currentYear + this.futureYearsLimit;
+
+        for (let y = startYear; y <= endYear; y++) {
+          this.years.push(y);
+        }
+      }
+
       this.gregYear =
         this.futureYearsLimit == 0
           ? Number(this.todaysDate.gregorian?.split('/')[2])
           : Number(this.todaysDate.gregorian?.split('/')[2]) +
-          this.futureYearsLimit;
+            this.futureYearsLimit;
       for (let i = 0; i < this.gregYear; i++) {
         if (i < this.pastYearsLimit) {
           let val = this.gregYear--;
@@ -152,7 +176,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
         this.futureYearsLimit == 0
           ? Number(this.todaysDate.ummAlQura?.split('/')[2])
           : Number(this.todaysDate.ummAlQura?.split('/')[2]) +
-          this.futureYearsLimit;
+            this.futureYearsLimit;
       for (let i = 0; i < this.ummAlQuraYear; i++) {
         if (i < this.pastYearsLimit) {
           let val = this.ummAlQuraYear--;
@@ -194,9 +218,9 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     }
     const days = this._dateUtilsService.getMonthData(
       '01/' +
-      this.periodForm.controls['month'].value +
-      '/' +
-      this.periodForm.controls['year'].value,
+        this.periodForm.controls['month'].value +
+        '/' +
+        this.periodForm.controls['year'].value,
       this.mode
     );
     this.weeks = this.generateWeeksArray(days);
@@ -223,14 +247,14 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   }
 
   /// Generate month weeks
-  generateWeeksArray(daysArray) {
+  generateWeeksArray(daysArray: any) {
     const firstDayName = daysArray[0]?.dN;
     const startIndex = this.weekdaysEn.indexOf(firstDayName);
-    const weeks = [[]];
+    const weeks = [[]] as any;
     let currentWeek = 0;
     let currentDayIndex = startIndex;
 
-    daysArray?.forEach((day) => {
+    daysArray?.forEach((day: any) => {
       if (!weeks[currentWeek]) {
         weeks[currentWeek] = [];
       }
@@ -243,7 +267,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
         currentWeek++;
       }
     });
-    weeks.forEach((week) => {
+    weeks.forEach((week: any) => {
       while (week.length < 7) {
         week.push({});
       }
@@ -257,9 +281,9 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     this.initializeYearsAndMonths();
     this.generatetMonthData(
       '01/' +
-      this.periodForm.controls['month'].value +
-      '/' +
-      this.periodForm.controls['year'].value
+        this.periodForm.controls['month'].value +
+        '/' +
+        this.periodForm.controls['year'].value
     );
   }
 
@@ -335,33 +359,5 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
       this.todaysDate?.gregorian == day?.gD ||
       this.todaysDate?.ummAlQura == day?.uD
     );
-  }
-
-  /// Convert english numbers to arabic equivalent
-  parseEnglish(englishNum: any) {
-    if (!englishNum) return englishNum;
-    const numStr = String(englishNum);
-    const arabicNumbers = [
-      '\u0660',
-      '\u0661',
-      '\u0662',
-      '\u0663',
-      '\u0664',
-      '\u0665',
-      '\u0666',
-      '\u0667',
-      '\u0668',
-      '\u0669',
-    ];
-    return numStr.replace(/[0-9]/g, (digit) => {
-      return arabicNumbers[Number(digit)] || digit;
-    });
-  }
-
-  /// Convert arabic numbers to english equivalent
-  parseArabic(arabicNum: any) {
-    return arabicNum.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d: string) {
-      return d.charCodeAt(0) - 1632;
-    });
   }
 }

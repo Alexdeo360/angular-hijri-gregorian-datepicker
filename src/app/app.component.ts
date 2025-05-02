@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { DayInfo } from 'projects/hijri-gregorian-datepicker/src/interfaces/calendar-model';
-import { stylesConfig } from 'projects/hijri-gregorian-datepicker/src/interfaces/styles-config-model';
+import { DayInfo } from 'projects/hijri-gregorian-datepicker/src/_interfaces/calendar-model';
+import { stylesConfig } from 'projects/hijri-gregorian-datepicker/src/_interfaces/styles-config.model';
 
 @Component({
   selector: 'app-root',
