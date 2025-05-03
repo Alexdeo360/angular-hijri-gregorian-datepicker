@@ -62,7 +62,7 @@ Online demo can be found:
 
 ## Supported platforms
 
-<b>Angular</b> 10 - 16, 17 +<br />
+<b>Angular</b> 10 - 16, 18 +<br />
 <b>Ionic</b> 3 - 4, 5, 6 +<br />
 Mobile browsers and WebViews on: <b>Android</b> and <b>iOS</b><br />
 Desktop browsers: <b>Chrome, Firefox, Safari, Edge v.79 +</b><br />
