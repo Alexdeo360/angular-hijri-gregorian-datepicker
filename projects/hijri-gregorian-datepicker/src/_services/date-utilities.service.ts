@@ -356,4 +356,33 @@ export class DateUtilitiesService {
       return d.charCodeAt(0) - 1632;
     });
   }
+
+  ///
+  convertDateNumerals(date: string, targetLang: 'en' | 'ar'): string {
+    const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+    const toArabic = (value: string) =>
+      value
+        .split('')
+        .map((char) => (/\d/.test(char) ? arabicNumbers[+char] : char))
+        .join('');
+
+    const toEnglish = (value: string) =>
+      value
+        .split('')
+        .map((char) => {
+          const index = arabicNumbers.indexOf(char);
+          return index > -1 ? englishNumbers[index] : char;
+        })
+        .join('');
+
+    if (targetLang === 'ar') {
+      const [day, month, year] = date.split('/');
+      return `${toArabic(year)}/${toArabic(month)}/${toArabic(day)}`;
+    } else {
+      const [year, month, day] = date.split('/');
+      return `${toEnglish(day)}/${toEnglish(month)}/${toEnglish(year)}`;
+    }
+  }
 }

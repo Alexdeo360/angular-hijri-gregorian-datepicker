@@ -5,13 +5,14 @@
       <input type="checkbox" [disabled]="!canChangeMode" [checked]="mode === 'ummAlQura'"
         (change)="changeCalendarMode()" #calendarCheckbox />
       <span class="slider"
-        [ngStyle]="calendarCheckbox.checked ? { 'background-color': styles.primaryColor } : {}"></span>
+        [ngStyle]="calendarCheckbox.checked ? { 'background-color': styles.primaryColor } : {'background-color': styles.backgroundColor}"></span>
     </label>
   </div>
 
   <div class="todays-date-section" *ngIf="todaysDateSection" [ngStyle]="{
       'background-color': styles.backgroundColor,
-      color: styles.primaryColor
+      color: styles.primaryColor,
+      'border-radius': styles.borderRadius
     }">
     <div class="text-info" [ngClass]="{
         order: dir == 'rtl'
@@ -24,9 +25,12 @@
         color: styles.todaysDateTextColor
       }">
       <p *ngIf="mode == 'ummAlQura'">
-        {{todaysDate.ummAlQura}}
+        <!-- {{todaysDate.ummAlQura}} -->
+        {{ locale == 'ar' ? _dateUtilsService.convertDateNumerals(todaysDate.ummAlQura,'ar') : todaysDate.ummAlQura }}
       </p>
-      <p *ngIf="mode == 'greg'">{{ todaysDate.gregorian }}</p>
+      <p *ngIf="mode == 'greg'">
+        {{ locale == 'ar' ? _dateUtilsService.convertDateNumerals(todaysDate.gregorian,'ar') : todaysDate.gregorian }}
+      </p>
     </div>
   </div>
 
@@ -34,7 +38,7 @@
     <form [formGroup]="periodForm" class="period-form">
       <div class="select-item" [ngClass]="{
           order: dir == 'ltr'
-        }" [ngStyle]="{ 'background-color': styles.backgroundColor }">
+        }" [ngStyle]="{ 'background-color': styles.backgroundColor, 'border-radius': styles.borderRadius }">
         <label *ngIf="!periodForm.controls['year'].value">{{
           yearSelectLabel
         }}</label>
@@ -52,7 +56,7 @@
 
       <div class="select-item" [ngClass]="{
           order: dir == 'rtl'
-        }" [ngStyle]="{ 'background-color': styles.backgroundColor }">
+        }" [ngStyle]="{ 'background-color': styles.backgroundColor, 'border-radius': styles.borderRadius }">
         <label *ngIf="!periodForm.controls['month'].value">{{
           monthSelectLabel
         }}</label>
@@ -69,7 +73,7 @@
     </form>
   </div>
 
-  <div class="calendar-layout" [ngStyle]="{ 'background-color': styles.backgroundColor }">
+  <div class="calendar-layout" [ngStyle]="{ 'background-color': styles.backgroundColor, 'border-radius': styles.borderRadius }">
     <div class="week-days">
       <div class="week-day" [ngStyle]="{ color: styles.dayNameColor }"
         *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn">
@@ -132,7 +136,8 @@
       " (click)="onConfirmClicked()" *ngIf="showConfirmButton" [ngStyle]="{
         'background-color': styles.secondaryColor,
         color: styles.confirmBtnTextColor,
-        'font-family': styles.fontFamily
+        'font-family': styles.fontFamily,
+        'border-radius': styles.borderRadius
       }">
       {{ submitTextButton }}
     </button>

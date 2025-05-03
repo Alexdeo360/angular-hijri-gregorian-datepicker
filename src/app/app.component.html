@@ -7,13 +7,13 @@
       [disableYearPicker]="false" 
       [disableMonthPicker]="false" 
       [disableDayPicker]="false" 
-      [multiple]="false"
+      [multiple]="true"
       [isRequired]="true" 
       [showConfirmButton]="true" 
       [markToday]="true" 
       [mode]="mode" 
       [dir]="'ltr'" 
-      [locale]="'ar'"
+      [locale]="'en'"
       [submitTextButton]="'Confirm'" 
       [todaysDateText]="'Today\'s Date'" 
       [ummAlQuraDateText]="'Hijri Date'"
@@ -23,21 +23,21 @@
       [futureValidationMessageAr]="
         'التاريخ المحدد لا يمكن ان يكون في المستقبل!'
       "
+      [theme]="'Obsidian Green'"
+      [styles]="stylesConfig"
       [pastYearsLimit]="115" 
       [futureYearsLimit]="10" 
-      [gregStartDate]="'01/04/2015'"
-      [gregEndDate]="'01/04/2025'"
-      [styles]="stylesConfig" (onSubmit)="onSubmit($event)"
-      (onDaySelect)="onChange($event)" (onMonthChange)="onMonthChangeTest($event)"
+      (onSubmit)="onSubmit($event)"
+      (onDaySelect)="onChange($event)" 
+      (onMonthChange)="onMonthChangeTest($event)"
       (onYearChange)="onYearChangeTest($event)"
-      
       ></hijri-gregorian-datepicker>
   </div>
 
-  <button (click)="toggleMode()" id="toggle-btn">Toggle Mode</button>
+  <!-- <button (click)="toggleMode()" id="toggle-btn">Toggle Mode</button>
   <div class="event-container">
     <p *ngIf="(selectedDate | json) != '{}'">
       {{ selectedDate | json }}
     </p>
-  </div>
+  </div> -->
 </div>

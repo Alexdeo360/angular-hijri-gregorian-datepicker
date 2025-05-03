@@ -5,9 +5,10 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 
 - Most accurate Hijri, Gregorian calendar(date-picker) on NPM with 100% accuracy percentage.
-- Robust and tested code angular hijri/gregorian calendar/date-picker component for Angular 10 - 16, 17+ projects.
+- Robust and tested code angular hijri/gregorian calendar/date-picker component for Angular 10 - 16, 18+ projects.
 - Ionic 3 - 4, 5, 6 + is supported, can be used in iOS and Android.
 - `Zero` dependents package.
+- 10 different themes and layouts already built in, you can also customize your own as well.
 
 ## Dependents
 
@@ -18,9 +19,7 @@ Angular hijri gregorian with `Zero` dependents that supports conversion between 
 ## Preview
 
 <p>
-  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/1.png" width="25%"/>
-  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/2.png" width="25%"/>
-  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/3.png" width="25%"/>
+  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/themes.gif" width="40%"/>
 </p>
 
 ## Background
@@ -117,6 +116,7 @@ import { HijriGregorianDatepickerModule } from 'angular-hijri-gregorian-datepick
     "
   [pastYearsLimit]="90"
   [futureYearsLimit]="0"
+  [theme]="'Midnight Blue'"
   [styles]="stylesConfig"
   (onSubmit)="onSubmit($event)"
   (onDaySelect)="onChange($event)"
@@ -174,6 +174,9 @@ Inside your component.ts:
 | <b>`pastYearsLimit`</b>            | number  |                     `90`                      | indicates for the past years number you want to allow user to select from                                        |
 | <b>`futureYearsLimit`</b>          | number  |                      `0`                      | indicates for the future years number you want to allow user to select from                                      |
 | <b>`styles`</b>                    | object  |                     `{}`                      | Styles for the calendar look and feel                                                                            |
+| <b>`theme`</b>                     | string  |                     `Midnight Blue`           | Different skins and themes for the calendar('Ocean Breeze', 'Lavender Dreams', 'Sunset Glow', 'Midnight Blue', 'Forest Canopy', 'Rosewood Elegance', 'Icy Mint', 'Golden Sand', 'Steel Grey', 'Coral Reef')
+
+<br />
 
 ## Styles
 
@@ -189,6 +192,8 @@ Inside your component.ts:
 | <b>`dayNameColor`</b>        | string |     `#0d7f91`     | Day names text color                                                 |
 | <b>`dayColor`</b>            | string |      `#000`       | Enabled days text color                                              |
 | <b>`fontFamily`</b>          | string | `Default-Regular` | Font family of the font used globally and pre defined within project |
+| <b>`borderRadius`</b>        | string |       `8px`       | Border radius of the each div and button in the calendar layout      |
+
 
 <br />
 

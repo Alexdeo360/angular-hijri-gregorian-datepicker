@@ -9,4 +9,5 @@ export interface stylesConfig {
   dayNameColor?: string;
   dayColor?: string;
   fontFamily?: string;
+  borderRadius?: string;
 }

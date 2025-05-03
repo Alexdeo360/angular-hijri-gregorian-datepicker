@@ -12,7 +12,7 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { stylesConfig } from '../_interfaces/styles-config.model';
 import { DateUtilitiesService } from '../_services/date-utilities.service';
 import { TodayDate, DayInfo } from '../_interfaces/calendar-model';
-
+import * as themesConfig from '../themes/themes.json';
 @Component({
   selector: 'hijri-gregorian-datepicker',
   templateUrl: './hijri-gregorian-datepicker.component.html',
@@ -40,26 +40,12 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @Input() ummAlQuraDateText: string = 'Hijri Date';
   @Input() monthSelectLabel: string = 'Month';
   @Input() yearSelectLabel: string = 'Year';
-  @Input() pastYearsLimit: number = 90;
-  @Input() futureYearsLimit: number = 0;
   @Input() futureValidationMessageEn: string;
   @Input() futureValidationMessageAr: string;
-  @Input() gregStartDate: string;
-  @Input() gregEndDate: string;
-  @Input() ummAlQuraStartDate: string;
-  @Input() ummAlQuraEndDate: string;
-  @Input() styles?: stylesConfig = {
-    backgroundColor: '#E3F6F5',
-    primaryColor: '#272343',
-    secondaryColor: '#272343',
-    todaysDateBgColor: '#272343',
-    todaysDateTextColor: '#fff',
-    confirmBtnTextColor: '#fff',
-    disabledDayColor: '#C0C0C0',
-    dayColor: '#000',
-    dayNameColor: '#0d7f91',
-    fontFamily: 'Default-Regular',
-  };
+  @Input() theme?: string = 'Ocean Breeze';
+  @Input() pastYearsLimit: number = 90;
+  @Input() futureYearsLimit: number = 0;
+  @Input() styles?: stylesConfig = {};
   /// Outputs
   @Output() onSubmit = new EventEmitter<object>();
   @Output() onDaySelect = new EventEmitter<object>();
@@ -106,6 +92,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   selectedDay: DayInfo;
   periodForm: UntypedFormGroup;
   multipleSelectedDates = [] as DayInfo[];
+  themes = [] as any;
   @HostBinding('style.font-family') fontFamilyStyle: string;
   constructor(
     public formBuilder: UntypedFormBuilder,
@@ -113,7 +100,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.fontFamilyStyle = this.styles.fontFamily;
+    this.initTheme();
     this.initializeForm();
     this.getTodaysDateInfo();
     this.initializeYearsAndMonths();
@@ -123,6 +110,19 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     if (!changes['mode'].isFirstChange()) {
       this.changeCalendarMode();
     }
+  }
+
+  initTheme() {
+    this.themes = themesConfig;
+    if (this.theme) {
+      for (const themeItem of this.themes['default']) {
+        if (themeItem.name == this.theme) {
+          this.styles = themeItem.stylesConfig;
+          break;
+        }
+      }
+    }
+    this.fontFamilyStyle = this.styles.fontFamily;
   }
 
   /// Initialize form control for month and year select
@@ -138,25 +138,6 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     this.years = [];
     this.months = [];
     if (this.mode == 'greg') {
-      if (this.gregStartDate && this.gregEndDate) {
-        // ✅ Use start/end range
-        const startYear = Number(this.gregStartDate.split('/')[2]);
-        const endYear = Number(this.gregEndDate.split('/')[2]);
-
-        for (let y = startYear; y <= endYear; y++) {
-          this.years.push(y);
-        }
-      } else {
-        // 🔁 Use past/future years logic
-        const currentYear = Number(this.todaysDate.gregorian?.split('/')[2]);
-        const startYear = currentYear - this.pastYearsLimit;
-        const endYear = currentYear + this.futureYearsLimit;
-
-        for (let y = startYear; y <= endYear; y++) {
-          this.years.push(y);
-        }
-      }
-
       this.gregYear =
         this.futureYearsLimit == 0
           ? Number(this.todaysDate.gregorian?.split('/')[2])

@@ -11,16 +11,17 @@ export class AppComponent {
   toggle: boolean = false;
   selectedDate: DayInfo;
   stylesConfig: stylesConfig = {
-    backgroundColor: '#E3F6F5',
-    primaryColor: '#272343',
-    secondaryColor: '#272343',
-    todaysDateBgColor: '#272343',
-    todaysDateTextColor: '#fff',
-    confirmBtnTextColor: '#fff',
-    disabledDayColor: '#C0C0C0',
-    dayColor: '#000',
-    dayNameColor: '#0d7f91',
+    backgroundColor: '#e3f4f4',
+    primaryColor: '#116466',
+    secondaryColor: '#2c3531',
+    todaysDateBgColor: '#116466',
+    todaysDateTextColor: '#e3f4f4',
+    confirmBtnTextColor: '#e3f4f4',
+    disabledDayColor: '#a6a6a6',
+    dayColor: '#2c3531',
+    dayNameColor: '#116466',
     fontFamily: 'Default-Regular',
+    borderRadius: '8px',
   };
   mode = 'greg';
   constructor() {}
