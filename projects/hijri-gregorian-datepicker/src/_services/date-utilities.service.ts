@@ -10,7 +10,7 @@ export class DateUtilitiesService {
 
   constructor() {
     // this.calendarData = datesDictionary['default'];
-    this.calendarData = datesDictionary;
+    this.calendarData = datesDictionary; 
   }
 
   parseDate(dateStr: string): Date | null {

@@ -210,10 +210,10 @@ Inside your component.ts:
 
 ## Helper Functions
 
-import { HijriGregorianDatepickerService } from 'angular-hijri-gregorian-datepicker';
+import { DateUtilitiesService } from '../_services/date-utilities.service';
 
 ```ts
-  constructor(private calendarService: HijriGregorianDatepickerService) {
+  constructor(private _dateUtils: DateUtilitiesService) {
 
   }
 
