@@ -11,7 +11,7 @@ export class AppComponent {
   toggle: boolean = false;
   selectedDate: DayInfo;
   stylesConfig: stylesConfig = {
-    backgroundColor: '#e3f4f4',
+    backgroundColor: '#000',
     primaryColor: '#116466',
     secondaryColor: '#2c3531',
     todaysDateBgColor: '#116466',

@@ -42,7 +42,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @Input() yearSelectLabel: string = 'Year';
   @Input() futureValidationMessageEn: string;
   @Input() futureValidationMessageAr: string;
-  @Input() theme?: string = 'Ocean Breeze';
+  @Input() theme?: string = '';
   @Input() pastYearsLimit: number = 90;
   @Input() futureYearsLimit: number = 0;
   @Input() styles?: stylesConfig = {};
@@ -113,8 +113,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   }
 
   initTheme() {
-    this.themes = themesConfig;
-    if (this.theme) {
+    if (this.theme != '') {
+      this.themes = themesConfig;
       for (const themeItem of this.themes['default']) {
         if (themeItem.name == this.theme) {
           this.styles = themeItem.stylesConfig;
