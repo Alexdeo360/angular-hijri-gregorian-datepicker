@@ -8,9 +8,10 @@
     "strict": false,
     "noImplicitReturns": false,
     "paths": {
-      "hijri-gregorian-datepicker": [
-        "dist/hijri-gregorian-datepicker/hijri-gregorian-datepicker",
-        "dist/hijri-gregorian-datepicker"
+		"@services/*": ["projects/hijri-gregorian-datepicker/src/_services/*"],
+		"hijri-gregorian-datepicker": [
+			"dist/hijri-gregorian-datepicker/hijri-gregorian-datepicker",
+			"dist/hijri-gregorian-datepicker"
       ]
     },
     "noFallthroughCasesInSwitch": true,

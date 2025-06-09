@@ -11,6 +11,7 @@ import {
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { stylesConfig } from '../_interfaces/styles-config.model';
 import { DateUtilitiesService } from '../_services/date-utilities.service';
+//import { DateUtilitiesService } from '@services/date-utilities.service';
 import { TodayDate, DayInfo } from '../_interfaces/calendar-model';
 import * as themesConfig from '../themes/themes.json';
 @Component({
@@ -46,11 +47,14 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @Input() pastYearsLimit: number = 90;
   @Input() futureYearsLimit: number = 0;
   @Input() styles?: stylesConfig = {};
+  
   /// Outputs
   @Output() onSubmit = new EventEmitter<object>();
   @Output() onDaySelect = new EventEmitter<object>();
   @Output() onMonthChange = new EventEmitter<object>();
   @Output() onYearChange = new EventEmitter<object>();
+  @Output() onModeChange = new EventEmitter<string>();
+
   /// Variables
   ummAlQuraMonths = [
     { labelAr: 'محرم', labelEn: 'Muharram', value: 1 },
@@ -258,7 +262,9 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
 
   /// Change calendar mode 'greg' or 'ummAlQura'
   changeCalendarMode() {
+    console.log('changeCalendarMode CALLED! Mode will be:', this.mode == 'greg' ? 'ummAlQura' : 'greg');
     this.mode = this.mode == 'greg' ? 'ummAlQura' : 'greg';
+    this.onModeChange.emit(this.mode);
     this.initializeYearsAndMonths();
     this.generatetMonthData(
       '01/' +
